@@ -1,4 +1,5 @@
-﻿using CandyShop.Models;
+﻿
+using CandyShop.Models;
 using CandyShop.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace CandyShop.Controllers
 {
     public class CandyController : Controller
-    { 
+    {
 
         private readonly ICandyRepository _candyRepository;
         private readonly ICategoryRepository _categoryRepository;
@@ -31,6 +32,13 @@ namespace CandyShop.Controllers
             candyListViewModel.CurrentCategory = "Best Sellers";
 
             return View(candyListViewModel);
+        }
+        public IActionResult Details(int id)
+        {
+            var candy = _candyRepository.GetCandyById(id);
+            if (candy == null)
+                return NotFound();
+            return View(candy);
         }
     }
 }
